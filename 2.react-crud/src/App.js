@@ -76,7 +76,6 @@ handleDelete = (i) => {
         <input type='text' ref='txtAge' placeholder='Enter Age'/>
         <button onClick={e => this.handleSubmit(e)}>Save</button>
       </form>
-
       <table>
         <tr>
           <th>Name</th>
