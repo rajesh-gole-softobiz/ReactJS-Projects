@@ -4,7 +4,10 @@ class App extends Component {
   constructor(){
     super();
     this.state ={
-      employeeData : []
+      title : 'CRUD Application',
+      employeeData : [],
+      act: 0,
+      index:''
     }
   }
 
@@ -15,24 +18,39 @@ class App extends Component {
     let name = this.refs.txtName.value;
     let age = this.refs.txtAge.value;
 
-    let newEmployee = {
-      "name" : name,
-      "age" : age
+    // this.state.act===0 means if this is a new record
+    if(this.state.act===0)
+    {
+      let newEmployee = {
+        "name" : name,
+        "age" : age
+      }
+      employeeData.push(newEmployee);
     }
-
-    employeeData.push(newEmployee);
-
+    else
+    {
+      let index = this.state.index;
+      employeeData[index].name = name;
+      employeeData[index].age =age;
+    }
     this.setState({
-       employeeData: employeeData
+       employeeData: employeeData,
+       act: 0
     })
-
     this.refs.myForm.reset();
-
   }
 
 // Edit data fun
 handleEdit = (i) => {
+  let employeeData = this.state.employeeData[i];
+  this.refs.txtName.value = employeeData.name;
+  this.refs.txtAge.value = employeeData.age;
 
+  this.setState({
+    employeeData : employeeData,
+    act : 1,
+    index : i
+  })
 }
 
 // Delete data fun
@@ -50,6 +68,7 @@ handleDelete = (i) => {
 
     return (
       <div>
+        <h1>{this.state.title}</h1>
       <form ref="myForm">
         <label>Name</label>
         <input type='text' ref='txtName' placeholder='Enter Name'/>
@@ -69,10 +88,10 @@ handleDelete = (i) => {
               <td>{data.name}</td>
               <td>{data.age}</td>
               <td>
-                <button onClick={this.handleEdit(i)}>Edit</button>
+                <button onClick={e => this.handleEdit(i)}>Edit</button>
               </td>
               <td>
-                <button onClick={this.handleDelete(i)}>Delete</button>
+                <button onClick={e => this.handleDelete(i)}>Delete</button>
               </td>
             </tr>
           )
