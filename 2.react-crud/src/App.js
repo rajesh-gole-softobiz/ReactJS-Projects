@@ -8,7 +8,7 @@ class App extends Component {
     }
   }
 
-
+// Submit data fun
   handleSubmit = (e) => {
     e.preventDefault();
     let employeeData  = this.state.employeeData;
@@ -29,6 +29,21 @@ class App extends Component {
     this.refs.myForm.reset();
 
   }
+
+// Edit data fun
+handleEdit = (i) => {
+
+}
+
+// Delete data fun
+handleDelete = (i) => {
+  let employeeData = this.state.employeeData;
+  employeeData.splice(i,1); 
+  this.setState({
+    employeeData  : employeeData
+  })
+
+}
 
   render() {
     let employeeData = this.state.employeeData;
@@ -53,6 +68,12 @@ class App extends Component {
             <tr key={i}> 
               <td>{data.name}</td>
               <td>{data.age}</td>
+              <td>
+                <button onClick={this.handleEdit(i)}>Edit</button>
+              </td>
+              <td>
+                <button onClick={this.handleDelete(i)}>Delete</button>
+              </td>
             </tr>
           )
         }
